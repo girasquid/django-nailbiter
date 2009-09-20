@@ -1,3 +1,7 @@
+"""
+Taken from sorl-thumbnail
+"""
+
 from PIL import Image, ImageFilter, ImageChops
 
 
