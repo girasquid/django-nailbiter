@@ -2,7 +2,7 @@
 ``django-nailbiter`` - a storage-agnostic thumbnail generator
 =============================================================
 
-``nailbiter`` is a simple Django thumbnail generation field,
+``nailbiter`` is a simple thumbnail generation field for Django,
 modeled after ``sorl-thumbnail``. 
 
 
