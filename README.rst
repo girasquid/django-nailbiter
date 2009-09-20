@@ -13,8 +13,14 @@ First, define a model using a ``nailbiter`` thumbnail field:
 
 In ``models.py``::
 
+	from django.contrib.auth.models import User
 	from django.db import models
 	from nailbiter.fields import ImageWithThumbsField
+
+
+	class Gallery(models.Model):
+		name = models.CharField(max_length=150)
+		
 
 	class Photo(models.Model):
 	    uploader = models.ForeignKey(User, related_name="photos")
