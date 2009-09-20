@@ -18,7 +18,7 @@ In ``models.py``::
 	from nailbiter.fields import ImageWithThumbsField
 
 	class Gallery(models.Model):
-		name = models.CharField(max_length=150)
+	    name = models.CharField(max_length=150)
 		
 
 	class Photo(models.Model):
