@@ -17,7 +17,6 @@ In ``models.py``::
 	from django.db import models
 	from nailbiter.fields import ImageWithThumbsField
 
-
 	class Gallery(models.Model):
 		name = models.CharField(max_length=150)
 		
