@@ -132,7 +132,6 @@ class ImageWithThumbsFieldFile(ImageFieldFile):
         """
         
         # save field data
-        print dir(self)
         super(ImageWithThumbsFieldFile, self).save(name, content, save)
     
         # generate thumbnails
