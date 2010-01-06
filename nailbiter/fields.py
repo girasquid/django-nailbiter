@@ -65,7 +65,6 @@ class ImageWithThumbsFieldFile(ImageFieldFile):
     
     def __init__(self, *args, **kwargs):
         super(ImageWithThumbsFieldFile, self).__init__(*args, **kwargs)
-        
         self.thumbnails_to_generate = []
         
         # queue `thumbnail` option
@@ -75,11 +74,12 @@ class ImageWithThumbsFieldFile(ImageFieldFile):
                 'options': self.field.thumbnail.get('options', []),
                 'size': self.field.thumbnail['size']})
             
-            setattr(self, "thumbnail", NailbiterThumbnail(
-                "thumbnail",
-                self.field.thumbnail['size'][1],
-                self.field.thumbnail['size'][0],
-                self._generate_thumbnail_url("thumbnail", self.field.thumbnail['size'])))
+            if self:
+                setattr(self, "thumbnail", NailbiterThumbnail(
+                    "thumbnail",
+                    self.field.thumbnail['size'][1],
+                    self.field.thumbnail['size'][0],
+                    self._generate_thumbnail_url("thumbnail", self.field.thumbnail['size'])))
         
         # queue `extra_thumbnails` 
         if self.field.extra_thumbnails:
@@ -90,12 +90,12 @@ class ImageWithThumbsFieldFile(ImageFieldFile):
                     'name': name,
                     'options': details.get('options', []),
                     'size': details['size']})
-                    
-                self.extra_thumbnails[name] = NailbiterThumbnail(
-                    name,
-                    details['size'][1],
-                    details['size'][0],
-                    self._generate_thumbnail_url(name, details['size']))
+                if self:
+                    self.extra_thumbnails[name] = NailbiterThumbnail(
+                        name,
+                        details['size'][1],
+                        details['size'][0],
+                        self._generate_thumbnail_url(name, details['size']))
     
     def generate_thumbnail_name(self, raw_name, thumb_name, size):
         """
@@ -132,18 +132,19 @@ class ImageWithThumbsFieldFile(ImageFieldFile):
         """
         
         # save field data
+        print dir(self)
         super(ImageWithThumbsFieldFile, self).save(name, content, save)
-        
+    
         # generate thumbnails
         for thumbnail in self.thumbnails_to_generate:
             filename = self.generate_thumbnail_name(self.name, thumbnail['name'], thumbnail['size'])
-            
+        
             # generate the thumbnail
             thumbnail_data = generate_thumbnail(
                 content, 
                 thumbnail['size'], 
                 thumbnail['options'])
-                
+            
             # store thumbnail data
             stored_filename = self.storage.save(filename, thumbnail_data)
             
